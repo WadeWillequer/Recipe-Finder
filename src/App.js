@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import RecipeSearcher from './RecipeSearcher/RecipeSearcher'
+import RecipeSearcher from './RecipeSearcher'
 
 function App() {
   return (

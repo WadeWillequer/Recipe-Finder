@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import RecipeList from './RecipeList';
 
 class RecipeSearcher extends Component {
 
@@ -8,14 +9,21 @@ class RecipeSearcher extends Component {
         this.state = { recipes: [] }
     }
 
+    componentDidMount() {
+        this.getRecipeByName('Beef');
+    }
+
     getRandomRecipe = () => {
+
+        const _this = this;
+
         axios({
             // We can configure everything we need to about the HTTP request in here
             method: 'GET',
             url: 'https://www.themealdb.com/api/json/v1/1/random.php'
         })
         .then(function(response) {
-            console.log(response);
+            _this.setState({ recipes: response.data.meals || [] })
         })
         .catch(function(error) {
             console.log(error);
@@ -23,6 +31,9 @@ class RecipeSearcher extends Component {
     }
 
         getRecipeByName = (name) => {
+
+            const _this = this;
+
             axios({
                 method: 'GET',
                 url: 'https://www.themealdb.com/api/json/v1/1/search.php',
@@ -31,7 +42,7 @@ class RecipeSearcher extends Component {
                 }
             })
             .then(function(response) {
-                console.log(response);
+                _this.setState({ recipes: response.data.meals || [] })
             })
             .catch(function(error) {
                 console.log(error);
@@ -40,6 +51,9 @@ class RecipeSearcher extends Component {
 
         //Create a function called getRecipesByLetter that takes in a letter as a parameter. This should carry out the proper Axios call to the database. You will need to pass in the lettter as the param f in the call
         getRecipesByLetter = (letter) => {
+
+            const _this = this;
+
             axios({
                 method: 'GET',
                 url: 'https://www.themealdb.com/api/json/v1/1/search.php',
@@ -47,15 +61,17 @@ class RecipeSearcher extends Component {
                     f: letter
                 }
             })
+            .then(function(response) {
+                _this.setState({ recipes: response.data.meals || [] })
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
         }
     render() {
-
-        this.getRecipeByName('Chicken');
-        this.getRecipesByLetter('L')
-
         return (
             <div>
-            
+            <RecipeList recipes={this.state.recipes} />
             </div>
         );
     }
