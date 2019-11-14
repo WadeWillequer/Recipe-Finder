@@ -24,7 +24,7 @@ class RecipeList extends Component {
             const ingredientIndentifier = 'strIngredient' + i;
             const amountIdentifier = 'strMeasure' + i;
             if (recipe[ingredientIndentifier] !== '' && recipe[ingredientIndentifier] != null) {
-                output.push(<li>{recipe[ingredientIndentifier]}: {recipe[amountIdentifier]}</li>)
+                output.push(<li key={i}>{recipe[ingredientIndentifier]}: {recipe[amountIdentifier]}</li>)
             }
             
         }
